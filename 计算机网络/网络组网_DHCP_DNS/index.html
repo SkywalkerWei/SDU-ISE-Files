@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>202300120065 Wei Tianxing</title>
+<style>
+body
+{
+diaplay:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+.button
+{
+display:inline-block;
+position: relative;
+z-index: 1;
+overflow: hidden;
+text-decoration: none;
+font-family: sans-serif;
+font-weight: 600;
+font-size: 2em;
+padding: 0.75em 1em;
+color: blue;
+border: 0.15em solid blue;
+border-radius: 2em;
+transition: 4s;
+}
+.button:before,
+.button:after 
+{
+content: "";
+position: absolute;
+top: -1.5em;
+z-index: -1;
+width: 200%;
+aspect-ratio: 1;
+border: none;
+border-radius: 40%;
+background-color: rgba(0, 0, 255, 0.25);
+transition: 4s;
+}
+.button:before 
+{
+left: -80%;
+transform: translate3d(0, 5em, 0) rotate(-340deg);
+}
+.button:after 
+{
+right: -80%;
+transform: translate3d(0, 5em, 0) rotate(390deg);
+}
+.button:hover,
+.button:focus 
+{
+color: white;
+}
+.button:hover:before,
+.button:hover:after,
+.button:focus:before,
+.button:focus:after
+{
+transform: none;
+background-color: rgba(0, 0, 255, 0.75);
+}
+</style>
+</head>
+<body>
+<center><font size='+2' color=#50ceff>202300120065 Wei_Tianxing</font></center>
+<hr>202300120065 Wei_Tianxing
+<br><center>Powered by WeiTX</center>
+<br><center>202300120065 Wei Tianxing</center>
+<br><a href="helloworld.html" class="button">Hello World</a>
+<div>Hover this button!</div>
+<br><a href='helloworld.html'>A small page</a>
+<br><a href='copyrights.html'>Copyrights</a>
+<br><a href='image.html'>Image page</a>
+<br><a href='image.jpg'>Image</a>
+</body>
+</html>
