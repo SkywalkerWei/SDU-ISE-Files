@@ -1,0 +1,75 @@
+C51 COMPILER V9.54   MAIN                                                                  12/30/2020 20:52:37 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include "LCD1602.h"
+   4          #include "Timer0.h"
+   5          
+   6          unsigned char Sec=55,Min=59,Hour=23;
+   7          
+   8          void main()
+   9          {
+  10   1              LCD_Init();
+  11   1              Timer0Init();
+  12   1              
+  13   1              LCD_ShowString(1,1,"Clock:");   //上电显示静态字符串
+  14   1              LCD_ShowString(2,1,"  :  :");
+  15   1              
+  16   1              while(1)
+  17   1              {
+  18   2                      LCD_ShowNum(2,1,Hour,2);        //显示时分秒
+  19   2                      LCD_ShowNum(2,4,Min,2);
+  20   2                      LCD_ShowNum(2,7,Sec,2);
+  21   2              }
+  22   1      }
+  23          
+  24          void Timer0_Routine() interrupt 1
+  25          {
+  26   1              static unsigned int T0Count;
+  27   1              TL0 = 0x18;             //设置定时初值
+  28   1              TH0 = 0xFC;             //设置定时初值
+  29   1              T0Count++;
+  30   1              if(T0Count>=1000)       //定时器分频，1s
+  31   1              {
+  32   2                      T0Count=0;
+  33   2                      Sec++;                  //1秒到，Sec自增
+  34   2                      if(Sec>=60)
+  35   2                      {
+  36   3                              Sec=0;          //60秒到，Sec清0，Min自增
+  37   3                              Min++;
+  38   3                              if(Min>=60)
+  39   3                              {
+  40   4                                      Min=0;  //60分钟到，Min清0，Hour自增
+  41   4                                      Hour++;
+  42   4                                      if(Hour>=24)
+  43   4                                      {
+  44   5                                              Hour=0; //24小时到，Hour清0
+  45   5                                      }
+  46   4                              }
+  47   3                      }
+  48   2              }
+  49   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    150    ----
+   CONSTANT SIZE    =     14    ----
+C51 COMPILER V9.54   MAIN                                                                  12/30/2020 20:52:37 PAGE 2   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

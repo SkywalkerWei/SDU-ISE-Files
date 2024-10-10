@@ -1,0 +1,70 @@
+C51 COMPILER V9.54   AT24C02                                                               04/07/2020 23:01:38 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE AT24C02
+OBJECT MODULE PLACED IN .\Objects\AT24C02.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE AT24C02.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\AT2
+                    -4C02.lst) OBJECT(.\Objects\AT24C02.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "I2C.h"
+   3          
+   4          #define AT24C02_ADDRESS         0xA0
+   5          
+   6          /**
+   7            * @brief  AT24C02写入一个字节
+   8            * @param  WordAddress 要写入字节的地址
+   9            * @param  Data 要写入的数据
+  10            * @retval 无
+  11            */
+  12          void AT24C02_WriteByte(unsigned char WordAddress,Data)
+  13          {
+  14   1              I2C_Start();
+  15   1              I2C_SendByte(AT24C02_ADDRESS);
+  16   1              I2C_ReceiveAck();
+  17   1              I2C_SendByte(WordAddress);
+  18   1              I2C_ReceiveAck();
+  19   1              I2C_SendByte(Data);
+  20   1              I2C_ReceiveAck();
+  21   1              I2C_Stop();
+  22   1      }
+  23          
+  24          /**
+  25            * @brief  AT24C02读取一个字节
+  26            * @param  WordAddress 要读出字节的地址
+  27            * @retval 读出的数据
+  28            */
+  29          unsigned char AT24C02_ReadByte(unsigned char WordAddress)
+  30          {
+  31   1              unsigned char Data;
+  32   1              I2C_Start();
+  33   1              I2C_SendByte(AT24C02_ADDRESS);
+  34   1              I2C_ReceiveAck();
+  35   1              I2C_SendByte(WordAddress);
+  36   1              I2C_ReceiveAck();
+  37   1              I2C_Start();
+  38   1              I2C_SendByte(AT24C02_ADDRESS|0x01);
+  39   1              I2C_ReceiveAck();
+  40   1              Data=I2C_ReceiveByte();
+  41   1              I2C_SendAck(1);
+  42   1              I2C_Stop();
+  43   1              return Data;
+  44   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     84    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.54   AT24C02                                                               04/07/2020 23:01:38 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

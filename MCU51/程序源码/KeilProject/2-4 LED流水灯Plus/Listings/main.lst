@@ -1,0 +1,65 @@
+C51 COMPILER V9.54   MAIN                                                                  04/03/2020 14:30:48 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          void Delay1ms(unsigned int xms);                //@12.000MHz
+   3          
+   4          
+   5          void main()
+   6          {
+   7   1              while(1)
+   8   1              {
+   9   2                      P2=0xFE;//1111 1110
+  10   2                      Delay1ms(1000);
+  11   2                      P2=0xFD;//1111 1101
+  12   2                      Delay1ms(1000);
+  13   2                      P2=0xFB;//1111 1011
+  14   2                      Delay1ms(100);
+  15   2                      P2=0xF7;//1111 0111
+  16   2                      Delay1ms(100);
+  17   2                      P2=0xEF;//1110 1111
+  18   2                      Delay1ms(100);
+  19   2                      P2=0xDF;//1101 1111
+  20   2                      Delay1ms(100);
+  21   2                      P2=0xBF;//1011 1111
+  22   2                      Delay1ms(100);
+  23   2                      P2=0x7F;//0111 1111
+  24   2                      Delay1ms(100);
+  25   2              }
+  26   1      }
+  27          
+  28          void Delay1ms(unsigned int xms)         //@12.000MHz
+  29          {
+  30   1              unsigned char i, j;
+  31   1              while(xms)
+  32   1              {
+  33   2                      i = 2;
+  34   2                      j = 239;
+  35   2                      do
+  36   2                      {
+  37   3                              while (--j);
+  38   3                      } while (--i);
+  39   2                      xms--;
+  40   2              }
+  41   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     82    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,73 @@
+C51 COMPILER V9.54   MAIN                                                                  11/02/2019 12:14:37 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          
+   4          sbit RCK=P3^5;          //RCLK
+   5          sbit SCK=P3^6;          //SRCLK
+   6          sbit SER=P3^4;          //SER
+   7          
+   8          #define MATRIX_LED_PORT         P0
+   9          
+  10          void _74HC595_WriteByte(unsigned char Byte)
+  11          {
+  12   1              unsigned char i;
+  13   1              for(i=0;i<8;i++)
+  14   1              {
+  15   2                      SER=Byte&(0x80>>i);
+  16   2                      SCK=1;
+  17   2                      SCK=0;
+  18   2              }
+  19   1              RCK=1;
+  20   1              RCK=0;
+  21   1      }
+  22          
+  23          void MatrixLED_ShowColumn(unsigned char Column,Data)
+  24          {
+  25   1              _74HC595_WriteByte(Data);
+  26   1              MATRIX_LED_PORT=~(0x80>>Column);
+  27   1              Delay(1);
+  28   1              MATRIX_LED_PORT=0xFF;
+  29   1      }
+  30          
+  31          void main()
+  32          {
+  33   1              SCK=0;
+  34   1              RCK=0;
+  35   1              while(1)
+  36   1              {
+  37   2                      MatrixLED_ShowColumn(0,0x3C);
+  38   2                      MatrixLED_ShowColumn(1,0x42);
+  39   2                      MatrixLED_ShowColumn(2,0xA9);
+  40   2                      MatrixLED_ShowColumn(3,0x85);
+  41   2                      MatrixLED_ShowColumn(4,0x85);
+  42   2                      MatrixLED_ShowColumn(5,0xA9);
+  43   2                      MatrixLED_ShowColumn(6,0x42);
+  44   2                      MatrixLED_ShowColumn(7,0x3C);
+  45   2              }
+  46   1      }
+  47          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    157    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   MAIN                                                                  11/02/2019 12:14:37 PAGE 2   
+
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

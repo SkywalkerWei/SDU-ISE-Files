@@ -1,0 +1,58 @@
+C51 COMPILER V9.54   TIMER0                                                                11/16/2019 12:19:26 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE TIMER0
+OBJECT MODULE PLACED IN .\Objects\Timer0.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE Timer0.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Time
+                    -r0.lst) OBJECT(.\Objects\Timer0.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          /**
+   4            * @brief  定时器0初始化，1毫秒@12.000MHz
+   5            * @param  无
+   6            * @retval 无
+   7            */
+   8          void Timer0Init(void)
+   9          {
+  10   1              TMOD &= 0xF0;           //设置定时器模式
+  11   1              TMOD |= 0x01;           //设置定时器模式
+  12   1              TL0 = 0x18;             //设置定时初值
+  13   1              TH0 = 0xFC;             //设置定时初值
+  14   1              TF0 = 0;                //清除TF0标志
+  15   1              TR0 = 1;                //定时器0开始计时
+  16   1              ET0=1;
+  17   1              EA=1;
+  18   1              PT0=0;
+  19   1      }
+  20          
+  21          /*定时器中断函数模板
+  22          void Timer0_Routine() interrupt 1
+  23          {
+  24                  static unsigned int T0Count;
+  25                  TL0 = 0x18;             //设置定时初值
+  26                  TH0 = 0xFC;             //设置定时初值
+  27                  T0Count++;
+  28                  if(T0Count>=1000)
+  29                  {
+  30                          T0Count=0;
+  31                          
+  32                  }
+  33          }
+  34          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     23    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

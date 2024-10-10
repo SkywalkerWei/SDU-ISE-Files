@@ -1,0 +1,73 @@
+C51 COMPILER V9.54   KEY                                                                   04/13/2020 23:28:25 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Objects\Key.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE Key.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Key.lst
+                    -) OBJECT(.\Objects\Key.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          
+   4          unsigned char Key_KeyNumber;
+   5          
+   6          unsigned char Key(void)
+   7          {
+   8   1              unsigned char Temp=0;
+   9   1              Temp=Key_KeyNumber;
+  10   1              Key_KeyNumber=0;
+  11   1              return Temp;
+  12   1      }
+  13          
+  14          unsigned char Key_GetState()
+  15          {
+  16   1              unsigned char KeyNumber=0;
+  17   1              
+  18   1              if(P3_1==0){KeyNumber=1;}
+  19   1              if(P3_0==0){KeyNumber=2;}
+  20   1              if(P3_2==0){KeyNumber=3;}
+  21   1              if(P3_3==0){KeyNumber=4;}
+  22   1              
+  23   1              return KeyNumber;
+  24   1      }
+  25          
+  26          void Key_Loop(void)
+  27          {
+  28   1              static unsigned char NowState,LastState;
+  29   1              LastState=NowState;
+  30   1              NowState=Key_GetState();
+  31   1              if(LastState==1 && NowState==0)
+  32   1              {
+  33   2                      Key_KeyNumber=1;
+  34   2              }
+  35   1              if(LastState==2 && NowState==0)
+  36   1              {
+  37   2                      Key_KeyNumber=2;
+  38   2              }
+  39   1              if(LastState==3 && NowState==0)
+  40   1              {
+  41   2                      Key_KeyNumber=3;
+  42   2              }
+  43   1              if(LastState==4 && NowState==0)
+  44   1              {
+  45   2                      Key_KeyNumber=4;
+  46   2              }
+  47   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     85    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   KEY                                                                   04/13/2020 23:28:25 PAGE 2   
+
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

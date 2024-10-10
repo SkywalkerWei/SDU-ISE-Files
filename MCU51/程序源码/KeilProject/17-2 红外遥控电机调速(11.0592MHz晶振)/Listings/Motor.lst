@@ -1,0 +1,70 @@
+C51 COMPILER V9.54   MOTOR                                                                 12/30/2020 22:26:17 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MOTOR
+OBJECT MODULE PLACED IN .\Objects\Motor.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE Motor.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Motor
+                    -.lst) OBJECT(.\Objects\Motor.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Timer1.h"
+   3          
+   4          //引脚定义
+   5          sbit Motor=P1^0;
+   6          
+   7          unsigned char Counter,Compare;
+   8          
+   9          /**
+  10            * @brief  电机初始化
+  11            * @param  无
+  12            * @retval 无
+  13            */
+  14          void Motor_Init(void)
+  15          {
+  16   1              Timer1_Init();
+  17   1      }
+  18          
+  19          /**
+  20            * @brief  电机设置速度
+  21            * @param  Speed 要设置的速度，范围0~100
+  22            * @retval 无
+  23            */
+  24          void Motor_SetSpeed(unsigned char Speed)
+  25          {
+  26   1              Compare=Speed;
+  27   1      }
+  28          
+  29          //定时器1中断函数
+  30          void Timer1_Routine() interrupt 3
+  31          {
+  32   1              TL1 = 0x9C;             //设置定时初值
+  33   1              TH1 = 0xFF;             //设置定时初值
+  34   1              Counter++;
+  35   1              Counter%=100;   //计数值变化范围限制在0~99
+  36   1              if(Counter<Compare)     //计数值小于比较值
+  37   1              {
+  38   2                      Motor=1;                //输出1
+  39   2              }
+  40   1              else                            //计数值大于比较值
+  41   1              {
+  42   2                      Motor=0;                //输出0
+  43   2              }
+  44   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     49    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.54   MOTOR                                                                 12/30/2020 22:26:17 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

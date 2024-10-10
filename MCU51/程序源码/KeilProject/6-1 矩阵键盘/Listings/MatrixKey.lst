@@ -1,0 +1,70 @@
+C51 COMPILER V9.54   MATRIXKEY                                                             11/04/2019 12:52:59 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MATRIXKEY
+OBJECT MODULE PLACED IN .\Objects\MatrixKey.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MatrixKey.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\M
+                    -atrixKey.lst) OBJECT(.\Objects\MatrixKey.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          
+   4          /**
+   5            * @brief  矩阵键盘读取按键键码
+   6            * @param  无
+   7            * @retval KeyNumber 按下按键的键码值
+   8                                  如果按键按下不放，程序会停留在此函数，松手的一瞬间，返回按键键码，没�
+             -��按键按下时，返回0
+   9            */
+  10          unsigned char MatrixKey()
+  11          {
+  12   1              unsigned char KeyNumber=0;
+  13   1              
+  14   1              P1=0xFF;
+  15   1              P1_3=0;
+  16   1              if(P1_7==0){Delay(20);while(P1_7==0);Delay(20);KeyNumber=1;}
+  17   1              if(P1_6==0){Delay(20);while(P1_6==0);Delay(20);KeyNumber=5;}
+  18   1              if(P1_5==0){Delay(20);while(P1_5==0);Delay(20);KeyNumber=9;}
+  19   1              if(P1_4==0){Delay(20);while(P1_4==0);Delay(20);KeyNumber=13;}
+  20   1              
+  21   1              P1=0xFF;
+  22   1              P1_2=0;
+  23   1              if(P1_7==0){Delay(20);while(P1_7==0);Delay(20);KeyNumber=2;}
+  24   1              if(P1_6==0){Delay(20);while(P1_6==0);Delay(20);KeyNumber=6;}
+  25   1              if(P1_5==0){Delay(20);while(P1_5==0);Delay(20);KeyNumber=10;}
+  26   1              if(P1_4==0){Delay(20);while(P1_4==0);Delay(20);KeyNumber=14;}
+  27   1              
+  28   1              P1=0xFF;
+  29   1              P1_1=0;
+  30   1              if(P1_7==0){Delay(20);while(P1_7==0);Delay(20);KeyNumber=3;}
+  31   1              if(P1_6==0){Delay(20);while(P1_6==0);Delay(20);KeyNumber=7;}
+  32   1              if(P1_5==0){Delay(20);while(P1_5==0);Delay(20);KeyNumber=11;}
+  33   1              if(P1_4==0){Delay(20);while(P1_4==0);Delay(20);KeyNumber=15;}
+  34   1              
+  35   1              P1=0xFF;
+  36   1              P1_0=0;
+  37   1              if(P1_7==0){Delay(20);while(P1_7==0);Delay(20);KeyNumber=4;}
+  38   1              if(P1_6==0){Delay(20);while(P1_6==0);Delay(20);KeyNumber=8;}
+  39   1              if(P1_5==0){Delay(20);while(P1_5==0);Delay(20);KeyNumber=12;}
+  40   1              if(P1_4==0){Delay(20);while(P1_4==0);Delay(20);KeyNumber=16;}
+  41   1              
+  42   1              return KeyNumber;
+  43   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    393    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.54   MATRIXKEY                                                             11/04/2019 12:52:59 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,57 @@
+C51 COMPILER V9.54   MAIN                                                                  11/02/2019 12:43:51 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include "MatrixLED.h"
+   4          
+   5          unsigned char code Animation[]={
+   6                  0x3C,0x42,0xA9,0x85,0x85,0xA9,0x42,0x3C,
+   7                  0x3C,0x42,0xA1,0x85,0x85,0xA1,0x42,0x3C,
+   8                  0x3C,0x42,0xA5,0x89,0x89,0xA5,0x42,0x3C,
+   9          };
+  10          
+  11          void main()
+  12          {
+  13   1              unsigned char i,Offset=0,Count=0;
+  14   1              MatrixLED_Init();
+  15   1              while(1)
+  16   1              {
+  17   2                      for(i=0;i<8;i++)
+  18   2                      {
+  19   3                              MatrixLED_ShowColumn(i,Animation[i+Offset]);
+  20   3                      }
+  21   2                      Count++;
+  22   2                      if(Count>15)
+  23   2                      {
+  24   3                              Count=0;
+  25   3                              Offset+=8;
+  26   3                              if(Offset>16)
+  27   3                              {
+  28   4                                      Offset=0;
+  29   4                              }
+  30   3                      }
+  31   2              }
+  32   1      }
+  33          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     64    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

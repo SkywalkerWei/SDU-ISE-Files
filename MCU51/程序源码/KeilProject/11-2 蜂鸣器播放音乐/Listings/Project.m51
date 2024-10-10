@@ -1,0 +1,169 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/09/2019  00:39:55  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL5\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\Delay.obj, .\Objects\Timer0.obj TO .\Objects\Project PRINT (.\Li
+>> stings\Project.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  .\Objects\Delay.obj (DELAY)
+  .\Objects\Timer0.obj (TIMER0)
+  D:\KEIL5\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\KEIL5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\Project (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     004CH     UNIT         ?DT?MAIN
+            IDATA   0054H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     00F1H     UNIT         ?CO?MAIN
+            CODE    00FFH     008CH     UNIT         ?C_C51STARTUP
+            CODE    018BH     004EH     UNIT         ?C_INITSEG
+            CODE    01D9H     0034H     UNIT         ?PR?TIMER0_ROUTINE?MAIN
+            CODE    020DH     0031H     UNIT         ?PR?MAIN?MAIN
+            CODE    023EH     0017H     UNIT         ?PR?TIMER0INIT?TIMER0
+            CODE    0255H     0015H     UNIT         ?PR?_DELAY?DELAY
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Project (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?TIMER0INIT?TIMER0
+  +--> ?CO?MAIN
+  +--> ?PR?_DELAY?DELAY
+
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/09/2019  00:39:55  PAGE 2
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Project (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:01D9H         PUBLIC        Timer0_Routine
+  D:0090H         PUBLIC        P1
+  C:000EH         PUBLIC        Music
+  B:0090H.5       PUBLIC        Buzzer
+  C:020DH         PUBLIC        main
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  D:0008H         PUBLIC        MusicSelect
+  D:0009H         PUBLIC        FreqSelect
+  D:000AH         PUBLIC        FreqTable
+  -------         PROC          MAIN
+  C:020DH         LINE#         233
+  C:020DH         LINE#         234
+  C:020DH         LINE#         235
+  C:0210H         LINE#         236
+  C:0210H         LINE#         237
+  C:0210H         LINE#         238
+  C:021AH         LINE#         239
+  C:021AH         LINE#         240
+  C:021CH         LINE#         241
+  C:021EH         LINE#         242
+  C:022BH         LINE#         243
+  C:022DH         LINE#         244
+  C:022FH         LINE#         245
+  C:0236H         LINE#         246
+  C:0238H         LINE#         247
+  C:023AH         LINE#         249
+  C:023AH         LINE#         250
+  C:023CH         LINE#         251
+  -------         ENDPROC       MAIN
+  -------         PROC          TIMER0_ROUTINE
+  C:01D9H         LINE#         256
+  C:01E4H         LINE#         258
+  C:01F2H         LINE#         259
+  C:01F2H         LINE#         261
+  C:01FFH         LINE#         262
+  C:0202H         LINE#         263
+  C:0204H         LINE#         264
+  C:0204H         LINE#         265
+  -------         ENDPROC       TIMER0_ROUTINE
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        DELAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0255H         PUBLIC        _Delay
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        xms
+  -------         DO            
+  D:0005H         SYMBOL        i
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/09/2019  00:39:55  PAGE 3
+
+
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:0255H         LINE#         2
+  C:0255H         LINE#         3
+  C:0255H         LINE#         5
+  C:025FH         LINE#         6
+  C:025FH         LINE#         7
+  C:0261H         LINE#         8
+  C:0263H         LINE#         10
+  C:0263H         LINE#         11
+  C:0265H         LINE#         12
+  C:0267H         LINE#         13
+  C:0269H         LINE#         14
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        DELAY
+
+  -------         MODULE        TIMER0
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  B:00A8H.7       PUBLIC        EA
+  D:0089H         PUBLIC        TMOD
+  B:00A8H.1       PUBLIC        ET0
+  B:0088H.5       PUBLIC        TF0
+  C:023EH         PUBLIC        Timer0Init
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:00B8H.1       PUBLIC        PT0
+  B:0088H.4       PUBLIC        TR0
+  -------         PROC          TIMER0INIT
+  C:023EH         LINE#         8
+  C:023EH         LINE#         9
+  C:023EH         LINE#         10
+  C:0241H         LINE#         11
+  C:0244H         LINE#         12
+  C:0247H         LINE#         13
+  C:024AH         LINE#         14
+  C:024CH         LINE#         15
+  C:024EH         LINE#         16
+  C:0250H         LINE#         17
+  C:0252H         LINE#         18
+  C:0254H         LINE#         19
+  -------         ENDPROC       TIMER0INIT
+  -------         ENDMOD        TIMER0
+
+Program Size: data=85.0 xdata=0 code=610
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

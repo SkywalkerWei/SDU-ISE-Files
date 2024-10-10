@@ -1,0 +1,71 @@
+C51 COMPILER V9.54   MAIN                                                                  10/03/2020 14:34:59 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include "Key.h"
+   4          #include "Nixie.h"
+   5          #include "Timer0.h"
+   6          
+   7          sbit Motor=P1^0;
+   8          
+   9          unsigned char Counter,Compare;
+  10          unsigned char KeyNum,Speed;
+  11          
+  12          void main()
+  13          {
+  14   1              Timer0_Init();
+  15   1              while(1)
+  16   1              {
+  17   2                      KeyNum=Key();
+  18   2                      if(KeyNum==1)
+  19   2                      {
+  20   3                              Speed++;
+  21   3                              Speed%=4;
+  22   3                              if(Speed==0){Compare=0;}
+  23   3                              if(Speed==1){Compare=50;}
+  24   3                              if(Speed==2){Compare=75;}
+  25   3                              if(Speed==3){Compare=100;}
+  26   3                      }
+  27   2                      Nixie(1,Speed);
+  28   2              }
+  29   1      }
+  30          
+  31          void Timer0_Routine() interrupt 1
+  32          {
+  33   1              TL0 = 0x9C;             //设置定时初值
+  34   1              TH0 = 0xFF;             //设置定时初值
+  35   1              Counter++;
+  36   1              Counter%=100;
+  37   1              if(Counter<Compare)
+  38   1              {
+  39   2                      Motor=1;
+  40   2              }
+  41   1              else
+  42   1              {
+  43   2                      Motor=0;
+  44   2              }
+  45   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    104    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   MAIN                                                                  10/03/2020 14:34:59 PAGE 2   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,173 @@
+C51 COMPILER V9.54   IR                                                                    04/15/2021 22:43:03 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE IR
+OBJECT MODULE PLACED IN .\Objects\IR.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE IR.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\IR.lst) 
+                    -OBJECT(.\Objects\IR.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Timer0.h"
+   3          #include "Int0.h"
+   4          
+   5          unsigned int IR_Time;
+   6          unsigned char IR_State;
+   7          
+   8          unsigned char IR_Data[4];
+   9          unsigned char IR_pData;
+  10          
+  11          unsigned char IR_DataFlag;
+  12          unsigned char IR_RepeatFlag;
+  13          unsigned char IR_Address;
+  14          unsigned char IR_Command;
+  15          
+  16          /**
+  17            * @brief  红外遥控初始化
+  18            * @param  无
+  19            * @retval 无
+  20            */
+  21          void IR_Init(void)
+  22          {
+  23   1              Timer0_Init();
+  24   1              Int0_Init();
+  25   1      }
+  26          
+  27          /**
+  28            * @brief  红外遥控获取收到数据帧标志位
+  29            * @param  无
+  30            * @retval 是否收到数据帧，1为收到，0为未收到
+  31            */
+  32          unsigned char IR_GetDataFlag(void)
+  33          {
+  34   1              if(IR_DataFlag)
+  35   1              {
+  36   2                      IR_DataFlag=0;
+  37   2                      return 1;
+  38   2              }
+  39   1              return 0;
+  40   1      }
+  41          
+  42          /**
+  43            * @brief  红外遥控获取收到连发帧标志位
+  44            * @param  无
+  45            * @retval 是否收到连发帧，1为收到，0为未收到
+  46            */
+  47          unsigned char IR_GetRepeatFlag(void)
+  48          {
+  49   1              if(IR_RepeatFlag)
+  50   1              {
+  51   2                      IR_RepeatFlag=0;
+  52   2                      return 1;
+  53   2              }
+  54   1              return 0;
+C51 COMPILER V9.54   IR                                                                    04/15/2021 22:43:03 PAGE 2   
+
+  55   1      }
+  56          
+  57          /**
+  58            * @brief  红外遥控获取收到的地址数据
+  59            * @param  无
+  60            * @retval 收到的地址数据
+  61            */
+  62          unsigned char IR_GetAddress(void)
+  63          {
+  64   1              return IR_Address;
+  65   1      }
+  66          
+  67          /**
+  68            * @brief  红外遥控获取收到的命令数据
+  69            * @param  无
+  70            * @retval 收到的命令数据
+  71            */
+  72          unsigned char IR_GetCommand(void)
+  73          {
+  74   1              return IR_Command;
+  75   1      }
+  76          
+  77          //外部中断0中断函数，下降沿触发执行
+  78          void Int0_Routine(void) interrupt 0
+  79          {
+  80   1              if(IR_State==0)                         //状态0，空闲状态
+  81   1              {
+  82   2                      Timer0_SetCounter(0);   //定时计数器清0
+  83   2                      Timer0_Run(1);                  //定时器启动
+  84   2                      IR_State=1;                             //置状态为1
+  85   2              }
+  86   1              else if(IR_State==1)            //状态1，等待Start信号或Repeat信号
+  87   1              {
+  88   2                      IR_Time=Timer0_GetCounter();    //获取上一次中断到此次中断的时间
+  89   2                      Timer0_SetCounter(0);   //定时计数器清0
+  90   2                      //如果计时为13.5ms，则接收到了Start信号（判定值在12MHz晶振下为13500，在11.0592MH
+             -z晶振下为12442）
+  91   2                      if(IR_Time>13500-500 && IR_Time<13500+500)
+  92   2                      {
+  93   3                              IR_State=2;                     //置状态为2
+  94   3                      }
+  95   2                      //如果计时为11.25ms，则接收到了Repeat信号（判定值在12MHz晶振下为11250，在11.0592
+             -MHz晶振下为10368）
+  96   2                      else if(IR_Time>11250-500 && IR_Time<11250+500)
+  97   2                      {
+  98   3                              IR_RepeatFlag=1;        //置收到连发帧标志位为1
+  99   3                              Timer0_Run(0);          //定时器停止
+ 100   3                              IR_State=0;                     //置状态为0
+ 101   3                      }
+ 102   2                      else                                    //接收出错
+ 103   2                      {
+ 104   3                              IR_State=1;                     //置状态为1
+ 105   3                      }
+ 106   2              }
+ 107   1              else if(IR_State==2)            //状态2，接收数据
+ 108   1              {
+ 109   2                      IR_Time=Timer0_GetCounter();    //获取上一次中断到此次中断的时间
+ 110   2                      Timer0_SetCounter(0);   //定时计数器清0
+ 111   2                      //如果计时为1120us，则接收到了数据0（判定值在12MHz晶振下为1120，在11.0592MHz晶�
+             -��下为1032）
+ 112   2                      if(IR_Time>1120-500 && IR_Time<1120+500)
+ 113   2                      {
+C51 COMPILER V9.54   IR                                                                    04/15/2021 22:43:03 PAGE 3   
+
+ 114   3                              IR_Data[IR_pData/8]&=~(0x01<<(IR_pData%8));     //数据对应位清0
+ 115   3                              IR_pData++;                     //数据位置指针自增
+ 116   3                      }
+ 117   2                      //如果计时为2250us，则接收到了数据1（判定值在12MHz晶振下为2250，在11.0592MHz晶�
+             -��下为2074）
+ 118   2                      else if(IR_Time>2250-500 && IR_Time<2250+500)
+ 119   2                      {
+ 120   3                              IR_Data[IR_pData/8]|=(0x01<<(IR_pData%8));      //数据对应位置1
+ 121   3                              IR_pData++;                     //数据位置指针自增
+ 122   3                      }
+ 123   2                      else                                    //接收出错
+ 124   2                      {
+ 125   3                              IR_pData=0;                     //数据位置指针清0
+ 126   3                              IR_State=1;                     //置状态为1
+ 127   3                      }
+ 128   2                      if(IR_pData>=32)                //如果接收到了32位数据
+ 129   2                      {
+ 130   3                              IR_pData=0;                     //数据位置指针清0
+ 131   3                              if((IR_Data[0]==~IR_Data[1]) && (IR_Data[2]==~IR_Data[3]))      //数据验证
+ 132   3                              {
+ 133   4                                      IR_Address=IR_Data[0];  //转存数据
+ 134   4                                      IR_Command=IR_Data[2];
+ 135   4                                      IR_DataFlag=1;  //置收到连发帧标志位为1
+ 136   4                              }
+ 137   3                              Timer0_Run(0);          //定时器停止
+ 138   3                              IR_State=0;                     //置状态为0
+ 139   3                      }
+ 140   2              }
+ 141   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    370    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

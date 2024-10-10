@@ -1,0 +1,70 @@
+C51 COMPILER V9.54   MAIN                                                                  05/02/2019 09:53:43 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          unsigned char NixieTable[]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};
+   4          void Delay(unsigned int xms)
+   5          {
+   6   1              unsigned char i, j;
+   7   1              while(xms--)
+   8   1              {
+   9   2                      i = 2;
+  10   2                      j = 239;
+  11   2                      do
+  12   2                      {
+  13   3                              while (--j);
+  14   3                      } while (--i);
+  15   2              }
+  16   1      }
+  17          
+  18          #define AAA
+  19          
+  20          #ifdef AAA
+  21          
+  22          bfoahdaiu
+  23          
+  24          #endif
+  25          
+  26          void Nixie(unsigned char Location,Number)
+*** ERROR C129 IN LINE 26 OF main.c: missing ';' before 'void'
+  27          {
+  28                  switch(Location)
+  29                  {
+  30                          case 1:P2_4=1;P2_3=1;P2_2=1;break;
+  31                          case 2:P2_4=1;P2_3=1;P2_2=0;break;
+  32                          case 3:P2_4=1;P2_3=0;P2_2=1;break;
+  33                          case 4:P2_4=1;P2_3=0;P2_2=0;break;
+  34                          case 5:P2_4=0;P2_3=1;P2_2=1;break;
+  35                          case 6:P2_4=0;P2_3=1;P2_2=0;break;
+  36                          case 7:P2_4=0;P2_3=0;P2_2=1;break;
+  37                          case 8:P2_4=0;P2_3=0;P2_2=0;break;
+  38                  }
+  39                  P0=NixieTable[Number];
+  40                  Delay(1);
+  41                  P0=0x00;
+  42          }
+  43          
+  44          void main()
+  45          {
+  46                  while(1)
+  47                  {
+  48                          Nixie(1,1);
+  49          //              Delay(20);
+  50                          Nixie(2,2);
+  51          //              Delay(20);
+  52                          Nixie(3,3);
+  53          //              Delay(20);
+C51 COMPILER V9.54   MAIN                                                                  05/02/2019 09:53:43 PAGE 2   
+
+  54                  }
+  55          }
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)

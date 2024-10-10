@@ -1,0 +1,49 @@
+C51 COMPILER V9.54   MAIN                                                                  12/02/2019 19:11:31 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "LCD1602.h"
+   3          #include "DS1302.h"
+   4          
+   5          void main()
+   6          {
+   7   1              LCD_Init();
+   8   1              DS1302_Init();
+   9   1              LCD_ShowString(1,1,"  -  -  ");//静态字符初始化显示
+  10   1              LCD_ShowString(2,1,"  :  :  ");
+  11   1              
+  12   1              DS1302_SetTime();//设置时间
+  13   1              
+  14   1              while(1)
+  15   1              {
+  16   2                      DS1302_ReadTime();//读取时间
+  17   2                      LCD_ShowNum(1,1,DS1302_Time[0],2);//显示年
+  18   2                      LCD_ShowNum(1,4,DS1302_Time[1],2);//显示月
+  19   2                      LCD_ShowNum(1,7,DS1302_Time[2],2);//显示日
+  20   2                      LCD_ShowNum(2,1,DS1302_Time[3],2);//显示时
+  21   2                      LCD_ShowNum(2,4,DS1302_Time[4],2);//显示分
+  22   2                      LCD_ShowNum(2,7,DS1302_Time[5],2);//显示秒
+  23   2              }
+  24   1      }
+  25          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    130    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
