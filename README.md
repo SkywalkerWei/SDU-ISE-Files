@@ -65,6 +65,8 @@
 
 * [波动物理](./电磁场与电磁波)
 * [电子信息工程](./EECS)
+* [电子信息工程实验](./EECS)
+  * 注意：该部分详细可见[这个仓库](https://github.com/SkywalkerWei/EECS-CX_College-24fall)
 
 ### 通选课
 
