@@ -1,0 +1,17 @@
+n=0:15;%定义n取值范围
+x1=cos(5*n*pi/16);%写出x1表达式
+subplot(4,2,1),stem(x1),ylabel('x1（n）');%将x1在图中画出来
+X1=fft(x1,16);%对x1做16点DFT变换
+subplot(4,2,3);stem(X1);%画出16点DFT变换的图像
+subplot(4,2,4);stem(abs(X1));%画出16点DFT变换的图像，abs为取模值，幅度响应
+X2=fft(x1,32);%对x1做32点DFT变换
+subplot(4,2,5);stem(X2);%
+subplot(4,2,6);stem(abs(X2));%画出32点DFT变换的图像，abs为取模值，幅度响应
+w=linspace(-2*pi,2*pi,500);%取w
+y1=x1*exp(-1i*n'*w);%做x1DTFT变换
+subplot(4,2,7);stem(y1),ylabel('X(jw)');%画出DFT变换的图像
+x2=4*cos(n*pi/2);%写出x2表达式
+X3=fft(x2,16);%对x2做16点DFT变换
+figure,subplot(3,1,1);stem(x2),ylabel('x2（n）')%将x2在图中画出来
+subplot(3,1,2);stem(X3);%
+subplot(3,1,3);stem(abs(X3));%画出16点DFT变换的图像，abs为取模值，幅度响应
